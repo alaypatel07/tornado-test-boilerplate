@@ -1,3 +1,4 @@
+from tornado import gen
 from tornado.web import Application
 from tornado.web import RequestHandler
 from tornado.ioloop import IOLoop
@@ -5,9 +6,13 @@ from tornado.httpserver import HTTPServer
 
 
 class HelloHandler(RequestHandler):
-
+    @gen.coroutine
     def get(self, *args, **kwargs):
+        yield gen.sleep(1)
         self.write("hello world")
+
+    def post(self, *args, **kwargs):
+        raise Exception()
 
 
 def make_app():
